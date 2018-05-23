@@ -1,6 +1,5 @@
+
 package multithreaded.synchronization.example;
-
-
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -14,6 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author alann
  */
+
 public class BufferImpl implements Buffer {
 
     private int buffer = -1;
@@ -25,15 +25,47 @@ public class BufferImpl implements Buffer {
     @Override
     public int get() {
 
-        System.out.println("Consumidor lê : " + buffer);
-        return buffer;
+        int valorLido = 0;
+        lockDeAcesso.lock();
+        try {
+            while (!ocupado) {
+                System.out.println("Buffer vazio, Comsumidor aguarda");
+                podeLer.await();
+            }
+            ocupado = false;
+            valorLido = buffer;
+            System.out.println("Consumidor lê: " + valorLido );
+            podeGravar.signal();
+            
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
+            
+        } finally {
+            lockDeAcesso.unlock();
+        }
+        return valorLido;
     }
 
     @Override
-    public void set(int value) {
+        public void set(int value) {
 
-        System.out.println("Produtor grava :" + value);
-        buffer = value;
+        lockDeAcesso.lock();
+        try {
+            while (ocupado) {
+                System.out.println("Buffer cheio, produtor aguarda");
+                podeGravar.await();
+            }
+            buffer = value;
+            ocupado = true;
+            System.out.println("Produtor grava: " + buffer );
+            podeLer.signal();
+            
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
+            
+        } finally {
+            lockDeAcesso.unlock();
+        }
 
     }
 
