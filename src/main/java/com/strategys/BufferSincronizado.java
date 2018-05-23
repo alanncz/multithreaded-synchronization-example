@@ -1,5 +1,6 @@
 
-package multithreaded.synchronization.example;
+package com.strategys;
+import com.interfaces.Buffer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -14,12 +15,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author alann
  */
 
-public class BufferImpl implements Buffer {
+public class BufferSincronizado implements Buffer {
 
     private int buffer = -1;
-    private Lock lockDeAcesso = new ReentrantLock();
-    private Condition podeGravar = lockDeAcesso.newCondition();
-    private Condition podeLer = lockDeAcesso.newCondition();
+    private final Lock lockDeAcesso = new ReentrantLock();
+    private final Condition podeGravar = lockDeAcesso.newCondition();
+    private final Condition podeLer = lockDeAcesso.newCondition();
     private boolean ocupado = false;
 
     @Override
@@ -38,9 +39,8 @@ public class BufferImpl implements Buffer {
             podeGravar.signal();
             
         } catch (InterruptedException exception) {
-            exception.printStackTrace();
-            
         } finally {
+            
             lockDeAcesso.unlock();
         }
         return valorLido;
@@ -61,7 +61,6 @@ public class BufferImpl implements Buffer {
             podeLer.signal();
             
         } catch (InterruptedException exception) {
-            exception.printStackTrace();
             
         } finally {
             lockDeAcesso.unlock();

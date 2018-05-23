@@ -1,6 +1,7 @@
-package multithreaded.synchronization.example;
+package com.model;
 
 
+import com.interfaces.Buffer;
 import java.util.Random;
 
 /*
@@ -12,24 +13,21 @@ import java.util.Random;
  *
  * @author alann
  */
-public class Consumer implements Runnable {
+public class Consumidor implements Runnable {
 
-    private static Random timeSleep = new Random();
-    private Buffer bufferShared;
+    private static final Random SLEEP = new Random();
+    private final Buffer bufferShared;
 
-    public Consumer(Buffer bufferShared) {
+    public Consumidor(Buffer bufferShared) {
         this.bufferShared = bufferShared;
     }
 
+    @Override
     public void run() {
         int sum = 0;
         for (int k = 1; k <= 10; k++) {
-            try {
-                Thread.sleep(timeSleep.nextInt(3000));
-                sum += bufferShared.get();
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
+            //Thread.sleep(timeSLEEP.nextInt(3000));
+            sum += bufferShared.get();
         }
         
         System.out.println("Fim do Consumidor. Valor da soma: " + sum);
