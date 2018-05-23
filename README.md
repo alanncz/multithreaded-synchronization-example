@@ -1,4 +1,4 @@
 # multithreaded-synchronization-example
 
 
-Exemplo de sicronização de thread com uso de buffer circular.
+Exemplo de sincronizaÃ§Ã£o de thread com uso de buffer circular.
