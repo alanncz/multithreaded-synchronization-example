@@ -2,7 +2,7 @@
 
 Exemplo de sincronização de thread com uso de buffer circular.
 
-#Executando aplicação pelo Docker :
+# Executando aplicação pelo Docker :
 
 Execute o script ``start.sh`` para iniciar a aplicação 
 
