@@ -1,9 +1,9 @@
-package com.model;
+package model;
 
-import com.interfaces.Buffer;
-import com.strategys.BufferBlocking;
-import com.strategys.BufferCircular;
-import com.strategys.BufferSincronizado;
+import interfaces.Buffer;
+import strategys.BufferBlocking;
+import strategys.BufferCircular;
+import strategys.BufferSincronizado;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,7 +1,7 @@
-package com.model;
+package model;
 
 
-import com.interfaces.Buffer;
+import interfaces.Buffer;
 import java.util.Random;
 
 /*
